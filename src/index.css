@@ -11,8 +11,18 @@
   --font-inter: 'Inter', sans-serif;
 }
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 @layer base {
-  /* Prevent any scrolling on the body level */
+  /* Prevent any scrolling on the body level by default (desktop) */
   html, body {
     margin: 0;
     padding: 0;
@@ -23,6 +33,27 @@
     overflow: hidden;
     height: 100vh;
     width: 100vw;
+  }
+
+  /* Relax scrolling for mobile/tablet */
+  @media (max-width: 1024px) {
+    html, body {
+      overflow-y: auto;
+      height: auto;
+      min-height: 100vh;
+      /* Hide scrollbar */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    html::-webkit-scrollbar, 
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    
+    body {
+      overflow-x: hidden;
+    }
   }
 }
 

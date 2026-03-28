@@ -72,7 +72,7 @@ export default function Layout({ children }) {
   const isHome = location.pathname === '/';
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col relative">
+    <div className="min-h-screen lg:h-screen w-full overflow-y-auto lg:overflow-hidden no-scrollbar flex flex-col relative">
       <CustomCursor />
       {/* Scrollbar only makes sense if there's global scrolling, but we keep it for effect on inner scrolls later if attached */}
       <ScrollProgressBar />
@@ -80,7 +80,7 @@ export default function Layout({ children }) {
       <Navbar />
       
       {/* Main takes available height minus Footer (if displayed) */}
-      <main className="flex-1 w-full h-full relative overflow-hidden break-words">
+      <main className="flex-1 w-full relative overflow-y-auto lg:overflow-hidden no-scrollbar break-words">
         {children}
       </main>
       

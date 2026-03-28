@@ -117,13 +117,13 @@ export default function About() {
         </motion.div>
 
         {/* Content Grid (Compact to fit 100vh) */}
-        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center flex-1 max-h-[60vh]">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center flex-1 lg:max-h-[60vh] h-auto lg:overflow-hidden no-scrollbar">
           {/* Image Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="h-full max-h-[40vh] md:max-h-[50vh]"
+            className="h-full max-h-[35vh] md:max-h-[50vh] lg:max-h-full"
           >
             <div className="relative overflow-hidden rounded-xl h-full shadow-2xl">
               <img
@@ -137,7 +137,7 @@ export default function About() {
           </motion.div>
 
           {/* Story Column */}
-          <div className="flex flex-col justify-center h-full gap-6">
+          <div className="flex flex-col justify-center h-full gap-2">
             <div className="space-y-4">
               {storyParagraphs.map((para, i) => (
                 <motion.p
@@ -157,13 +157,14 @@ export default function About() {
             </div>
 
             {/* Meet the Founders Section */}
-            <div className="mt-4 pt-8" style={{ borderTop: '1px solid rgba(201, 169, 110, 0.1)' }}>
+            <div className="mt-4 pt-2" style={{ borderTop: '1px solid rgba(201, 169, 110, 0.1)' }}>
                <div className="mb-6">
-                 <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] font-medium" style={{ color: '#C9A96E' }}>Meet the Founders</p>
-                 <p className="text-[12px] md:text-[13px] font-light mt-1" style={{ color: 'rgba(245,230,211,0.6)' }}>The heart behind the coffee</p>
+                 <span>
+                  <p className="text-[10px] md:text-[14px] uppercase tracking-[0.2em] font-medium" style={{ color: '#C9A96E' }}>Meet the Founders <span className="text-[12px] md:text-[10px] font-light mt-1" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>The heart's behind the coffee</span></p>
+                 </span>
                </div>
 
-               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 overflow-y-auto max-h-[35vh] pr-2 custom-scrollbar">
+               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 lg:overflow-y-auto lg:max-h-36vh] h-auto pr-2 no-scrollbar">
                  {[
                    { name: 'Akshay Paul', role: 'Visionary', image: '/akshay paul.jpg', link: 'https://www.instagram.com/akshaypaulasap/' },
                    { name: 'Heaven Hananiah', role: 'Creator', image: '/heaven.png', link: 'https://www.instagram.com/heaven_hananiah/' },

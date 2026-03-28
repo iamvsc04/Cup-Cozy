@@ -126,9 +126,9 @@ export default function Menu() {
         </div>
 
         {/* Scrollable Menu Grid Area */}
-        <div className="flex-1 overflow-y-auto pr-2 pb-12 w-full custom-scrollbar relative z-10">
+        <div className="flex-1 lg:overflow-y-auto lg:pr-2 pb-12 w-full no-scrollbar relative z-10">
           {loading ? (
-            <div className="h-full w-full flex items-center justify-center">
+            <div className="h-full w-full flex items-center justify-center p-12">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
@@ -140,7 +140,7 @@ export default function Menu() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCategory}
-                className="grid gap-3 md:gap-4 lg:grid-cols-2"
+                className="grid gap-3 md:gap-4 lg:grid-cols-2 lg:h-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

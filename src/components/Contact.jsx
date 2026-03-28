@@ -10,11 +10,15 @@ function LeafletMap() {
   useEffect(() => {
     let mapInstance = null;
 
-    async function initMap() {
+    const initMap = async () => {
+      // Synchronous check to see if Leaflet already initialized this container
+      if (!mapRef.current || mapRef.current._leaflet_id) return;
+
       const L = await import('leaflet');
       await import('leaflet/dist/leaflet.css');
 
-      if (!mapRef.current || mapInstance) return;
+      // Double check after async imports
+      if (!mapRef.current || mapRef.current._leaflet_id) return;
 
       mapInstance = L.map(mapRef.current, {
         scrollWheelZoom: false,
@@ -45,7 +49,7 @@ function LeafletMap() {
 
       L.control.zoom({ position: 'bottomright' }).addTo(mapInstance);
       setMapReady(true);
-    }
+    };
 
     initMap();
 
@@ -59,7 +63,7 @@ function LeafletMap() {
 
   return (
     <div className="relative w-full h-full min-h-[250px] md:min-h-0 rounded-xl overflow-hidden shadow-2xl" style={{ border: '1px solid rgba(201, 169, 110, 0.1)' }}>
-      <div ref={mapRef} className="w-full h-full" />
+      <div ref={mapRef} className="w-full h-full relative" />
       {!mapReady && (
         <div className="absolute inset-0 flex items-center justify-center" style={{ background: '#151010' }}>
           <motion.div
@@ -145,9 +149,9 @@ export default function Contact() {
           />
         </motion.div>
 
-        <div className="grid md:grid-cols-5 gap-10 lg:gap-16 items-center flex-1 max-h-[60vh]">
+        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-center flex-1 lg:max-h-[60vh] h-auto lg:overflow-hidden no-scrollbar">
           {/* Contact Info — narrower column */}
-          <div className="md:col-span-2 space-y-3 h-full flex flex-col justify-center">
+          <div className="lg:col-span-2 space-y-3 h-full flex flex-col justify-center">
             {contactInfo.map((info, i) => (
               <motion.div
                 key={i}
@@ -180,7 +184,7 @@ export default function Contact() {
 
           {/* Map — wider column */}
           <motion.div
-            className="md:col-span-3 h-full max-h-[30vh] md:max-h-[50vh] w-full"
+            className="lg:col-span-3 h-full min-h-[300px] lg:max-h-full w-full"
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.4, duration: 0.6 }}
