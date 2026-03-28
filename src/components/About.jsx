@@ -11,6 +11,76 @@ const storyParagraphs = [
 
 
 
+const FounderCard = ({ founder }) => {
+  return (
+    <motion.div
+      className="group relative w-full aspect-square rounded-3xl overflow-hidden"
+      style={{ background: 'rgba(210, 180, 140, 0.03)', border: '1px solid rgba(201, 169, 110, 0.1)' }}
+      whileHover="hover"
+    >
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#151010] via-transparent to-transparent opacity-60 z-10" />
+      
+      {/* Profile Image (Placeholder until user adds to public folder) */}
+      <img
+        src={founder.image}
+        alt={founder.name}
+        className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out"
+        onError={(e) => {
+          e.target.src = `https://ui-avatars.com/api/?name=${founder.name}&background=8B5E3C&color=F5E6D3&size=200`;
+        }}
+      />
+
+      {/* Info Overlay (Sliding up from bottom) */}
+      <motion.div 
+        className="absolute inset-x-0 bottom-0 p-4 z-20 flex flex-col justify-end"
+        variants={{
+          initial: { y: 20, opacity: 0 },
+          hover: { y: 0, opacity: 1 }
+        }}
+        initial="initial"
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        {/* Name & Role */}
+        <div className="mb-3">
+          <h4 className="text-sm font-semibold text-[#F5E6D3] tracking-tight">{founder.name}</h4>
+          <p className="text-[10px] text-[#C9A96E] uppercase tracking-widest mt-0.5">{founder.role}</p>
+        </div>
+
+        {/* Social Bar (Horizontal reveal) */}
+        <div className="flex items-center justify-between bg-[rgba(245,230,211,0.05)] backdrop-blur-md rounded-2xl p-2 border border-[rgba(201,169,110,0.2)]">
+          <a 
+            href={founder.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-8 h-8 rounded-xl bg-[#C9A96E] flex items-center justify-center text-[#151010] hover:scale-110 transition-transform shadow-[0_0_15px_rgba(201,169,110,0.3)] cursor-pointer"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </a>
+          <span className="text-[10px] text-[rgba(245,230,211,0.6)] font-medium pr-2">Visit Instagram</span>
+        </div>
+      </motion.div>
+
+      {/* Top Right "Action" Icon (Uiverse style) */}
+      <a 
+        href={founder.link} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[rgba(21,16,16,0.4)] backdrop-blur-md flex items-center justify-center border border-[rgba(245,230,211,0.1)] z-20 group-hover:bg-[#C9A96E] group-hover:text-[#151010] transition-colors duration-300 cursor-pointer"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 2L11 13" />
+          <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+        </svg>
+      </a>
+    </motion.div>
+  );
+};
+
 export default function About() {
   return (
     <section 
@@ -86,31 +156,23 @@ export default function About() {
               ))}
             </div>
 
-            {/* Meet the Founders */}
-            <motion.div
-              className="flex items-center gap-4 md:gap-5 mt-4 pt-6"
-              style={{ borderTop: '1px solid rgba(201, 169, 110, 0.1)' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-               <div className="flex -space-x-3">
-                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80&auto=format&fit=crop" alt="Founder 1" className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#151010] object-cover shadow-lg" loading="lazy" />
-                 <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&q=80&auto=format&fit=crop" alt="Founder 2" className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#151010] object-cover shadow-lg" loading="lazy" />
+            {/* Meet the Founders Section */}
+            <div className="mt-4 pt-8" style={{ borderTop: '1px solid rgba(201, 169, 110, 0.1)' }}>
+               <div className="mb-6">
+                 <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] font-medium" style={{ color: '#C9A96E' }}>Meet the Founders</p>
+                 <p className="text-[12px] md:text-[13px] font-light mt-1" style={{ color: 'rgba(245,230,211,0.6)' }}>The heart behind the coffee</p>
                </div>
-               <div className="flex flex-col justify-center">
-                 <p className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-medium" style={{ color: '#C9A96E' }}>Meet the Founders</p>
-                 <p className="text-[12px] md:text-sm font-light mt-0.5" style={{ color: 'rgba(245,230,211,0.6)' }}>Alex & Sam</p>
+
+               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 overflow-y-auto max-h-[35vh] pr-2 custom-scrollbar">
+                 {[
+                   { name: 'Akshay Paul', role: 'Visionary', image: '/akshay paul.jpg', link: 'https://www.instagram.com/akshaypaulasap/' },
+                   { name: 'Heaven Hananiah', role: 'Creator', image: '/heaven.png', link: 'https://www.instagram.com/heaven_hananiah/' },
+                   { name: 'Akhil Reddy', role: 'Architect', image: '/akhil.jpg', link: 'https://www.instagram.com/akhilreddy.in/' }
+                 ].map((founder, i) => (
+                   <FounderCard key={i} founder={founder} />
+                 ))}
                </div>
-               
-               <div className="ml-auto hidden md:block">
-                 <div className="w-10 h-10 rounded-full border border-[rgba(201,169,110,0.2)] flex items-center justify-center bg-[rgba(201,169,110,0.05)]">
-                   <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(201,169,110,0.4)" stroke="none">
-                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                   </svg>
-                 </div>
-               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

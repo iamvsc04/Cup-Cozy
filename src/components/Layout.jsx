@@ -3,7 +3,6 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import SocialSidebar from './SocialSidebar';
 
 function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -79,7 +78,6 @@ export default function Layout({ children }) {
       <ScrollProgressBar />
       
       <Navbar />
-      <SocialSidebar />
       
       {/* Main takes available height minus Footer (if displayed) */}
       <main className="flex-1 w-full h-full relative overflow-hidden break-words">

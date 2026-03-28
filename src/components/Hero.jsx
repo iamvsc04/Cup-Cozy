@@ -34,7 +34,7 @@ export default function Hero() {
   }, []);
 
   const handleEnterSite = () => {
-    navigate('/menu');
+    navigate('/about');
   };
 
   return (
