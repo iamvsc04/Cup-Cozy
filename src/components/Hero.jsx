@@ -155,7 +155,7 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
             onClick={(e) => {
               e.stopPropagation();
-              navigate('/menu');
+              navigate('/about');
             }}
             className="px-12 py-5 rounded-full text-sm md:text-base font-medium tracking-[0.2em] uppercase"
             style={{
