@@ -9,6 +9,7 @@ import About from './components/About';
 import Menu from './components/Menu';
 import Gallery from './components/Gallery';
 import Contact from './components/Contact';
+import SanityStudio from './components/SanityStudio';
 
 // Page transition wrapper — strictly 100vh h-full
 function PageWrapper({ children }) {
@@ -53,9 +54,17 @@ export default function App() {
       {!loaded && <LoadingScreen onComplete={handleLoadComplete} />}
 
       {loaded && (
-        <Layout>
-          <AnimatedRoutes />
-        </Layout>
+        <Routes>
+          {/* Admin CMS isolated from frontend Layout */}
+          <Route path="/studio/*" element={<SanityStudio />} />
+          
+          {/* Frontend App guarded by Layout */}
+          <Route path="*" element={
+            <Layout>
+              <AnimatedRoutes />
+            </Layout>
+          } />
+        </Routes>
       )}
     </>
   );

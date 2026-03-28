@@ -1,0 +1,26 @@
+{
+  "PIZZA": [
+    {
+      "description": "Onion, Capsicum , chicken, full loaded cheese",
+      "emoji": "🍕",
+      "name": "Classic Chicken pizza",
+      "price": "250"
+    }
+  ],
+  "Coffee": [
+    {
+      "description": "latte with extra creme",
+      "emoji": "☕",
+      "name": "Caffe latte",
+      "price": "99"
+    }
+  ],
+  "Teas": [
+    {
+      "description": "hot tea",
+      "emoji": "☕",
+      "name": "chai",
+      "price": "25"
+    }
+  ]
+}

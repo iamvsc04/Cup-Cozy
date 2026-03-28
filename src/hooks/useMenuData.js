@@ -1,4 +1,16 @@
 import { useState, useEffect } from 'react';
+import { createClient } from '@sanity/client';
+import { sanityConfig } from '../sanity/config';
+
+// Initialize a client specifically for live DEV mode fetching bypassing the CDN entirely
+const devClient = createClient({
+  ...sanityConfig,
+  useCdn: false,
+});
+
+const query = `*[_type == "menuItem" && available != false] {
+  name, description, price, emoji, category
+}`;
 
 export function useMenuData() {
   const [menuData, setMenuData] = useState({});
@@ -8,33 +20,33 @@ export function useMenuData() {
   useEffect(() => {
     async function fetchMenu() {
       try {
-        const response = await fetch('/data/menu.csv');
-        const text = await response.text();
-        const lines = text.trim().split('\n');
-        const headers = lines[0].split(',');
-
-        const items = lines.slice(1).map(line => {
-          const values = line.split(',');
-          const item = {};
-          headers.forEach((h, i) => {
-            item[h.trim()] = values[i]?.trim();
+        if (import.meta.env.DEV) {
+          // LIVE DEV MODE: Fetch directly from Sanity database so local Studio edits appear instantly
+          const data = await devClient.fetch(query);
+          const groupedData = {};
+          
+          data.forEach(item => {
+            const cat = item.category || "Uncategorized";
+            if (!groupedData[cat]) groupedData[cat] = [];
+            
+            // Remove category from payload as it acts as the dictionary key
+            const { category, ...rest } = item;
+            groupedData[cat].push(rest);
           });
-          return item;
-        });
-
-        // Group by category
-        const grouped = {};
-        const cats = [];
-        items.forEach(item => {
-          if (!grouped[item.category]) {
-            grouped[item.category] = [];
-            cats.push(item.category);
+          
+          setMenuData(groupedData);
+          setCategories(Object.keys(groupedData));
+        } else {
+          // PRODUCTION MODE: Fetch the pre-computed static JSON for max speed & 0 API overhead
+          const response = await fetch('/data/menu.json');
+          if (!response.ok) {
+            throw new Error('Static menu JSON not found. Build script may have failed.');
           }
-          grouped[item.category].push(item);
-        });
-
-        setMenuData(grouped);
-        setCategories(cats);
+          const data = await response.json();
+          
+          setMenuData(data);
+          setCategories(Object.keys(data));
+        }
       } catch (err) {
         console.error('Failed to load menu data:', err);
       } finally {
